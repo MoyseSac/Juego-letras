@@ -34,17 +34,38 @@ int main() {
 	srand(time(NULL));
 	DibujarMarco();
 	nivel_uno();
-	if(ganar_uno){
-		system("cls");
+	system("cls");
+	if(ganar){
 		Ganar();
-	}else if(perder_uno=true){
+		Sleep(1000);
+		system("cls");
+		DibujarMarco();
+		nivel_dos();
+		system("cls");
+		if(ganar){
+			Ganar();
+			Sleep(1000);
+			system("cls");
+			DibujarMarco();
+			nivel_tres();
+			system("cls");
+			if(ganar){
+				Ganar();
+				Sleep(1000);
+				system("cls");
+			}else if(perder){
+				printf("Tan cerca pero tan lejos");
+			}
+		}else if(perder){
+			printf("Llegaste lejos, vuelve a intentarlo");
+		}
+	}else if(perder){
 		printf("Hay que ser malo para perder en el nvl 1");
 	}
 	
 	
 	return 0;
 }
-
 
 
 
@@ -98,7 +119,7 @@ void nivel_uno(){
 			if (pressedKey == letter) {
 				printf("\b \b"); // Borra la letra si es correcta
 				letter = randomChar(); // Genera una nueva letra
-				x = rand() % WIDTH + 1; // Reinicia la posici髇 en x
+				x = rand() % WIDTH + 1; // Reinicia la posici贸n en x
 				y=2;
 				contadorAciertos++;
 			} else {
@@ -110,7 +131,7 @@ void nivel_uno(){
 		//verificamos si la letra ha llegado al borde de la pantalla
 		if(y==HEIGHT){
 			printf("\b \b"); // Borra la letra si se llego al final de la pantalla 
-			x = rand() % WIDTH + 1; // Reinicia la posici髇 en x
+			x = rand() % WIDTH + 1; // Reinicia la posici贸n en x
 			y=3;
 			contadorFallos++;
 		}
@@ -133,10 +154,17 @@ void nivel_uno(){
 }
 
 void nivel_dos() {
+	//reiniciamos las variables que controlan el comportamiento del juego 
+		partida=true;
+		ganar=false;
+		perder=false;
+		contadorAciertos=0;
+		contadorFallos=0;
+		
+		
 		int x = rand() % WIDTH + 1;
 		int y = 2;
 		char letter = randomChar();
-		void clearFrame(int PosX, int PosY);
 		
 		//inicio de juego hasta que el usuario pierda o gane 
 		while (partida) {
@@ -150,7 +178,7 @@ void nivel_dos() {
 				if (pressedKey == letter) {
 					printf("\b \b"); // Borra la letra si es correcta
 					letter = randomChar(); // Genera una nueva letra
-					x = rand() % WIDTH + 1; // Reinicia la posici髇 en x
+					x = rand() % WIDTH + 1; // Reinicia la posici贸n en x
 					y = 3;
 					contadorAciertos++;
 				}
@@ -163,7 +191,7 @@ void nivel_dos() {
 			//verificamos si la letra ha llegado al borde de la pantalla
 			if (y == HEIGHT) {
 				printf("\b \b"); // Borra la letra si se llego al final de la pantalla 
-				x = rand() % WIDTH + 1; // Reinicia la posici髇 en x
+				x = rand() % WIDTH + 1; // Reinicia la posici贸n en x
 				y = 3;
 				contadorFallos++;
 			}
@@ -171,18 +199,112 @@ void nivel_dos() {
 			//verificamos si debemos terminar el juego, cambiamos el estado del while 
 			if (contadorAciertos == 5) {
 				partida = false;
-				Ganar(); // funci髇 para indicar que ha ganado
+				ganar=true;
 			}
 			else if (contadorFallos == 5) {
 				printf("Lo lamento ha perdido");
 				partida = false;
-				perder_dos = true;
+				perder= true;
 			}
 			
 			clearFrame(x, y);
 			y++;
-		}
 	}
+}
+
+void nivel_tres() {
+	//reiniciamos las variables que controlan el comportamientod del juego 
+	partida=true;
+	ganar=false;
+	perder=false;
+	contadorAciertos=0;
+	contadorFallos=0;
+	
+	
+	int x1 = rand() % WIDTH + 1;
+	int x2 = rand() % WIDTH + 1;
+	int x3 = rand() % WIDTH +1;
+	int y1 = 3, y2=3, y3=3;
+	char letter1 = randomChar();
+	char letter2 = randomChar();
+	char letter3 = randomChar();
+	
+	//inicio de juego hasta que el usuario pierda o gane 
+	while (partida) {
+		gotoxy(x1, y1);
+		printf("%c", letter1);
+		gotoxy(x2, y2);
+		printf("%c", letter2);
+		gotoxy(x3, y3);
+		printf("%c", letter3);
+		Sleep(150);  //aumentamos la velocidad
+		
+		
+		if (_kbhit()) { // Verifica si se ha presionado una tecla
+			char pressedKey = _getch(); // Obtiene la tecla presionada
+			
+			if (pressedKey == letter1 ) {
+				printf("\b \b"); // Borra la letra si es correcta
+				letter1 = randomChar(); // Genera una nueva letra
+				x1 = rand() % WIDTH + 1; // Reinicia la posici贸n en x
+				y1 = 3;
+				contadorAciertos++;
+			}else if(pressedKey == letter2){
+				printf("\b \b"); // Borra la letra si es correcta
+				letter2 = randomChar(); // Genera una nueva letra
+				x2 = rand() % WIDTH + 1; // Reinicia la posici贸n en x
+				y2 = 3;
+				contadorAciertos++;
+			}else if(pressedKey == letter3){
+				printf("\b \b"); // Borra la letra si es correcta
+				letter3 = randomChar(); // Genera una nueva letra
+				x3 = rand() % WIDTH + 1; // Reinicia la posici贸n en x
+				y3 = 3;
+				contadorAciertos++;
+			}
+			else {
+				contadorFallos++;
+			}
+			
+		}
+		
+		//verificamos si la letra ha llegado al borde de la pantalla
+		if (y1 == HEIGHT) {
+			printf("\b \b"); // Borra la letra si se llego al final de la pantalla 
+			x1 = rand() % WIDTH + 1; // Reinicia la posici贸n en x
+			y1 = 3;
+			contadorFallos++;
+		}else if(y2== HEIGHT){
+			printf("\b \b"); // Borra la letra si se llego al final de la pantalla 
+			x2 = rand() % WIDTH + 1; // Reinicia la posici贸n en x
+			y2 = 3;
+			contadorFallos++;
+		}else if(y3==HEIGHT){
+			printf("\b \b"); // Borra la letra si se llego al final de la pantalla 
+			x3 = rand() % WIDTH + 1; // Reinicia la posici贸n en x
+			y3 = 3;
+			contadorFallos++;
+		}
+		
+		//verificamos si debemos terminar el juego, cambiamos el estado del while 
+		if (contadorAciertos == 5) {
+			partida = false;
+			ganar=true;
+		}
+		else if (contadorFallos == 10) {
+			printf("Lo lamento ha perdido");
+			partida = false;
+			perder= true;
+		}
+		
+		clearFrame(x1, y1);
+		clearFrame(x2, y2);
+		clearFrame(x3, y3);
+		y1++;
+		y2++;
+		y3++;
+	}
+}
 
 void Ganar(){
 	char heart[6][10] = {
